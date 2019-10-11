@@ -1,7 +1,7 @@
 # tcss390dana
 DANA - TCSS 390 AU 19
 
-Duy's Note (if you don't use Eclipse):
+**Duy's Note (if you don't use Eclipse):**
 1. Beware which branch you are on. You can check by:
 > git branch  
 2. To see all branches. You can check by:
