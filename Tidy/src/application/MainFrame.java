@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -88,7 +90,14 @@ public class MainFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent theEvent) {
     	final Object source = theEvent.getSource();
-    	JOptionPane.showMessageDialog(this, "Team D.N.A.\n Amelia\nDuy\nNick\nVersion 0.0", "About Tidy", JOptionPane.INFORMATION_MESSAGE);
+    	textReader text;
+		try {
+			text = new textReader("version.txt");
+			JOptionPane.showMessageDialog(this, text.getText(), "About Tidy", JOptionPane.INFORMATION_MESSAGE);
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found");
+		}
+    	
  
     }
     
