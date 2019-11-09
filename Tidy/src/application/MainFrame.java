@@ -5,8 +5,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -33,6 +37,12 @@ public class MainFrame extends JFrame implements ActionListener {
     private static JMenuBar myMenuBar = new JMenuBar();
     private static JMenu myInfoMenu = new JMenu("Info");
     private static JMenuItem myAboutMenuItem = new JMenuItem("About");
+    private static JMenu mySettings = new JMenu("Settings");
+    private static JMenuItem myImport = new JMenuItem("Import");
+    private static JMenuItem myExport = new JMenuItem("Export");
+    private static JMenuItem mySettingsView = new JMenuItem("View");
+    
+    private static JFileChooser myChoice = new JFileChooser();
 
 
     /**
@@ -70,8 +80,15 @@ public class MainFrame extends JFrame implements ActionListener {
         // Creates the menu and menu items
         this.add(myMenuBar, BorderLayout.NORTH);
         myMenuBar.add(myInfoMenu);
+        myMenuBar.add(mySettings);
         myInfoMenu.add(myAboutMenuItem);
+        mySettings.add(myImport);
+        mySettings.add(myExport);
+        mySettings.add(mySettingsView);
         myAboutMenuItem.addActionListener(this);
+        mySettingsView.addActionListener(this);
+        myImport.addActionListener(this);
+        myExport.addActionListener(this);
        
 
     }
@@ -91,13 +108,57 @@ public class MainFrame extends JFrame implements ActionListener {
     public void actionPerformed(final ActionEvent theEvent) {
     	final Object source = theEvent.getSource();
     	textReader text;
-		try {
-			text = new textReader("version.txt");
-			JOptionPane.showMessageDialog(this, text.getText(), "About Tidy", JOptionPane.INFORMATION_MESSAGE);
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found");
-		}
-    	
+    	if(theEvent.getSource() == myAboutMenuItem) {
+    		try {
+    			text = new textReader("./src/files/version.txt");
+    			JOptionPane.showMessageDialog(this, text.getText(), "About Tidy", JOptionPane.INFORMATION_MESSAGE);
+    		} catch (FileNotFoundException e) {
+    			System.out.println("File not found");
+    		}
+    	}
+    	else if(theEvent.getSource() == myImport) {
+    		int returnVal = myChoice.showOpenDialog(this);
+    		String fileContent ="";
+    		if(returnVal == JFileChooser.APPROVE_OPTION) {
+    			try {
+					text = new textReader(myChoice.getSelectedFile().toString());
+					fileContent = text.getText();
+				} catch (FileNotFoundException e1) {
+					
+				}
+    			
+    	     
+    			BufferedWriter writer;
+    			try {
+    				writer = new BufferedWriter(new FileWriter("./src/files/settings.txt"));
+    				writer.write(fileContent);
+    				writer.close();
+    			} catch (IOException e) {
+    				System.out.println("No file found");
+    			}
+
+    		}
+    	}
+    	else if(theEvent.getSource() == myExport) {
+    		try {
+				text = new textReader("./src/files/settings.txt");
+				File exportFile = new File("./src/files/export.txt");
+				exportFile.createNewFile();
+				FileWriter writer = new FileWriter(exportFile);
+				writer.write(text.getText());
+				writer.close();
+			} catch (IOException e) {
+			}
+    		
+    	}
+    	else if(theEvent.getSource() == mySettingsView) {
+    		try {
+    			text = new textReader("./src/files/settings.txt");
+    			JOptionPane.showMessageDialog(this, text.getText(), "Settings", JOptionPane.INFORMATION_MESSAGE);
+    		} catch (FileNotFoundException e) {
+    			System.out.println("File not found");
+    		}
+    	}
  
     }
     
