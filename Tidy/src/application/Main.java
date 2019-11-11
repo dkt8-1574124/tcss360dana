@@ -35,7 +35,6 @@ public final class Main {
         }
         UIManager.put("swing.boldMetal", Boolean.FALSE);
         EventQueue.invokeLater(new Runnable() {
-            @Override
             public void run() {
                 final MainFrame mainFrame = new MainFrame();
                 mainFrame.start();

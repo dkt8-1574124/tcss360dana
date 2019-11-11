@@ -40,7 +40,7 @@ public class MainFrame extends JFrame implements ActionListener {
     private static JMenu mySettings = new JMenu("Settings");
     private static JMenuItem myImport = new JMenuItem("Import");
     private static JMenuItem myExport = new JMenuItem("Export");
-    private static JMenuItem mySettingsView = new JMenuItem("View");
+    private static JMenuItem myViewButton = new JMenuItem("Edit Settings");
     
     private static JFileChooser myChoice = new JFileChooser();
 
@@ -84,12 +84,15 @@ public class MainFrame extends JFrame implements ActionListener {
         myInfoMenu.add(myAboutMenuItem);
         mySettings.add(myImport);
         mySettings.add(myExport);
-        mySettings.add(mySettingsView);
+        mySettings.add(myViewButton);
         myAboutMenuItem.addActionListener(this);
-        mySettingsView.addActionListener(this);
+        myViewButton.addActionListener(this);
         myImport.addActionListener(this);
         myExport.addActionListener(this);
-       
+        
+        //
+        JButton fillButton = new JButton();
+        
 
     }
     
@@ -104,7 +107,6 @@ public class MainFrame extends JFrame implements ActionListener {
     }
     
 
-    @Override
     public void actionPerformed(final ActionEvent theEvent) {
     	final Object source = theEvent.getSource();
     	textReader text;
@@ -149,15 +151,24 @@ public class MainFrame extends JFrame implements ActionListener {
 				writer.close();
 			} catch (IOException e) {
 			}
+    	}else if(theEvent.getSource() == myViewButton) {    		
+    		JTextField field1 = new JTextField();
+    		JTextField field2 = new JTextField();
     		
-    	}
-    	else if(theEvent.getSource() == mySettingsView) {
+    		Object[] fields = {
+    				"Enter Your First Name:", field1,
+    				"Enter Your Email Address", field2
+    		};
+    		JOptionPane.showConfirmDialog(null, fields, "Customize My Settings", JOptionPane.OK_CANCEL_OPTION);
     		try {
-    			text = new textReader("./src/files/settings.txt");
-    			JOptionPane.showMessageDialog(this, text.getText(), "Settings", JOptionPane.INFORMATION_MESSAGE);
-    		} catch (FileNotFoundException e) {
-    			System.out.println("File not found");
-    		}
+				File exportFile = new File("./src/files/settings.txt");
+				exportFile.createNewFile();
+				FileWriter writer = new FileWriter(exportFile);
+				writer.write(field1.getText() + "\n");
+				writer.write(field2.getText());
+				writer.close();
+			} catch (IOException e) {
+			}
     	}
  
     }
