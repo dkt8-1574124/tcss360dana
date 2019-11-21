@@ -3,6 +3,7 @@ package application;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -12,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -40,8 +42,10 @@ public class MainFrame extends JFrame implements ActionListener {
     private static JMenu mySettings = new JMenu("Settings");
     private static JMenuItem myImport = new JMenuItem("Import");
     private static JMenuItem myExport = new JMenuItem("Export");
-    private static JMenuItem myViewButton = new JMenuItem("Edit Settings");
-    
+    private static JMenuItem myEditButton = new JMenuItem("Edit Settings");
+    private static JMenuItem myViewButton = new JMenuItem("View");
+    private static JButton myAdd = new JButton("+");
+
     private static JFileChooser myChoice = new JFileChooser();
 
 
@@ -68,10 +72,14 @@ public class MainFrame extends JFrame implements ActionListener {
         this.add(topPanel, BorderLayout.CENTER);
         final JPanel leftPanel = new JPanel();
         final JPanel rightPanel = new JPanel();
-        final JTextArea test = new JTextArea("Test           west");
+       // final JTextArea test = new JTextArea("Test           west");
         final JTextArea test2 = new JTextArea("Test Center");
+        leftPanel.setLayout(new GridLayout(0,1,5,5));
         leftPanel.setBackground(Color.BLUE);
-        leftPanel.add(test);
+        //leftPanel.add(test);
+        leftPanel.add(myAdd);
+
+
         rightPanel.setBackground(Color.RED);
         rightPanel.add(test2);
         topPanel.add(leftPanel, BorderLayout.WEST);
@@ -84,11 +92,13 @@ public class MainFrame extends JFrame implements ActionListener {
         myInfoMenu.add(myAboutMenuItem);
         mySettings.add(myImport);
         mySettings.add(myExport);
+        mySettings.add(myEditButton);
         mySettings.add(myViewButton);
         myAboutMenuItem.addActionListener(this);
-        myViewButton.addActionListener(this);
+        myEditButton.addActionListener(this);
         myImport.addActionListener(this);
         myExport.addActionListener(this);
+        myViewButton.addActionListener(this);
         
         //
         JButton fillButton = new JButton();
@@ -151,7 +161,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				writer.close();
 			} catch (IOException e) {
 			}
-    	}else if(theEvent.getSource() == myViewButton) {    		
+    	}else if(theEvent.getSource() == myEditButton) {    		
     		JTextField field1 = new JTextField();
     		JTextField field2 = new JTextField();
     		
@@ -168,6 +178,14 @@ public class MainFrame extends JFrame implements ActionListener {
 				writer.write(field2.getText());
 				writer.close();
 			} catch (IOException e) {
+			}
+    	}else if(theEvent.getSource() == myViewButton) {
+    		try {
+				text = new textReader("./src/files/settings.txt");
+				JOptionPane.showMessageDialog(this, text.getText(), "Settings", JOptionPane.INFORMATION_MESSAGE);
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
 			}
     	}
  

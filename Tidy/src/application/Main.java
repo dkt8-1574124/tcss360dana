@@ -33,7 +33,7 @@ public final class Main {
         } catch (final ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
+        UIManager.put("swing.nimbus", Boolean.FALSE);
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 final MainFrame mainFrame = new MainFrame();
