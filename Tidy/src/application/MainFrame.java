@@ -21,6 +21,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 /**
@@ -49,7 +50,11 @@ public class MainFrame extends JFrame implements ActionListener {
     private JPanel leftPanel = new JPanel(new BorderLayout());
     private JPanel rightPanel = new JPanel();
     private JPanel topPanel = new JPanel(new BorderLayout());
+
     private JPanel projectPanel = new JPanel();
+    private JScrollPane myScroll = new JScrollPane(projectPanel);
+    
+    private projectController myController = new projectController();
 
 
     /**
@@ -76,13 +81,14 @@ public class MainFrame extends JFrame implements ActionListener {
 
        // final JTextArea test = new JTextArea("Test           west");
         final JTextArea test2 = new JTextArea("Test Center");
- 
+        projectPanel.setLayout(new GridLayout(0,1));
         leftPanel.setBackground(Color.BLUE);
-        //leftPanel.add(test);
-        leftPanel.add(projectPanel, BorderLayout.NORTH);
+        myScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        myScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        leftPanel.add(myScroll, BorderLayout.CENTER);
         leftPanel.add(myAdd, BorderLayout.SOUTH);
 
-        projectPanel.setLayout(new GridLayout(0,1));
+        
         //leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
         rightPanel.setBackground(Color.RED);
         rightPanel.add(test2);
@@ -127,14 +133,17 @@ public class MainFrame extends JFrame implements ActionListener {
     	textReader text;
     	
     	if(theEvent.getSource() == myAdd) {
+    		projectPanel.removeAll();
     		JTextField field1 = new JTextField();
     		Object[] fields = {"Enter a project Name:", field1};
     		int returnVal = JOptionPane.showConfirmDialog(this, fields, "Project Name", JOptionPane.OK_CANCEL_OPTION);
     		if(returnVal == JOptionPane.OK_OPTION) {
-    			Project test = new Project(field1.getText());
-    			JButton testButton = new JButton(test.getName());
-    			testButton.setPreferredSize(new Dimension(100,50));
-    			projectPanel.add(testButton);
+    			myController.add(field1.getText());
+    			for(JButton j: myController.getProjects()) {
+    				j.setPreferredSize(new Dimension(100,50));
+    				projectPanel.add(j);
+    			}
+
     			this.validate();
     		}
     		
