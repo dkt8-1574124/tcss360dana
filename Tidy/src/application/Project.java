@@ -29,4 +29,12 @@ public class Project {
 		this.itemsList.remove(oldItem);
 	}
 	
+	public Item getItem(Item find) {
+		for (Item i : this.itemsList) {
+			if (i == find) {
+				return i;
+			}
+		}
+		return null;
+	}
 }
