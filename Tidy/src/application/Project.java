@@ -17,14 +17,6 @@ public class Project {
 		this.name = newName;
 	}
 	
-<<<<<<< HEAD
-	public List getItemsList() {
-=======
-	public List<Item> getItemsList() {
->>>>>>> refs/remotes/origin/Nick
-		return this.itemsList;
-	}
-	
 	public void addItem(Item newItem) {
 		this.itemsList.add(newItem);
 	}
