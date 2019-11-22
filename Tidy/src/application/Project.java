@@ -17,7 +17,7 @@ public class Project {
 		this.name = newName;
 	}
 	
-	public List getItemsList() {
+	public List<Item> getItemsList() {
 		return this.itemsList;
 	}
 	

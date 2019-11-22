@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -22,7 +21,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 /**
@@ -47,6 +45,11 @@ public class MainFrame extends JFrame implements ActionListener {
     private static JButton myAdd = new JButton("+");
 
     private static JFileChooser myChoice = new JFileChooser();
+    
+    private JPanel leftPanel = new JPanel(new BorderLayout());
+    private JPanel rightPanel = new JPanel();
+    private JPanel topPanel = new JPanel(new BorderLayout());
+    private JPanel projectPanel = new JPanel();
 
 
     /**
@@ -66,20 +69,21 @@ public class MainFrame extends JFrame implements ActionListener {
         final int height = 500;
         this.setSize(new Dimension(width, height));
         this.setResizable(false);
-
+        myAdd.setBounds( 100, 100, 100, 100);
         //Creates the panels for layout design
-        final JPanel topPanel = new JPanel(new BorderLayout());
+
         this.add(topPanel, BorderLayout.CENTER);
-        final JPanel leftPanel = new JPanel();
-        final JPanel rightPanel = new JPanel();
+
        // final JTextArea test = new JTextArea("Test           west");
         final JTextArea test2 = new JTextArea("Test Center");
-        leftPanel.setLayout(new GridLayout(0,1,5,5));
+ 
         leftPanel.setBackground(Color.BLUE);
         //leftPanel.add(test);
-        leftPanel.add(myAdd);
+        leftPanel.add(projectPanel, BorderLayout.NORTH);
+        leftPanel.add(myAdd, BorderLayout.SOUTH);
 
-
+        projectPanel.setLayout(new GridLayout(0,1));
+        //leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
         rightPanel.setBackground(Color.RED);
         rightPanel.add(test2);
         topPanel.add(leftPanel, BorderLayout.WEST);
@@ -99,9 +103,10 @@ public class MainFrame extends JFrame implements ActionListener {
         myImport.addActionListener(this);
         myExport.addActionListener(this);
         myViewButton.addActionListener(this);
+        myAdd.addActionListener(this);
         
         //
-        JButton fillButton = new JButton();
+
         
 
     }
@@ -111,16 +116,29 @@ public class MainFrame extends JFrame implements ActionListener {
      * @param theString the name of the file.
      * @return whether the file is a .txt file.
      */
-    private boolean validateFile(final String theString) {
+    /*private boolean validateFile(final String theString) {
 
         return false;
-    }
+    }*/
     
 
     public void actionPerformed(final ActionEvent theEvent) {
-    	final Object source = theEvent.getSource();
+    	//final Object source = theEvent.getSource();
     	textReader text;
-    	if(theEvent.getSource() == myAboutMenuItem) {
+    	
+    	if(theEvent.getSource() == myAdd) {
+    		JTextField field1 = new JTextField();
+    		Object[] fields = {"Enter a project Name:", field1};
+    		int returnVal = JOptionPane.showConfirmDialog(this, fields, "Project Name", JOptionPane.OK_CANCEL_OPTION);
+    		if(returnVal == JOptionPane.OK_OPTION) {
+    			Project test = new Project(field1.getText());
+    			JButton testButton = new JButton(test.getName());
+    			testButton.setPreferredSize(new Dimension(100,50));
+    			projectPanel.add(testButton);
+    			this.validate();
+    		}
+    		
+    	}else if(theEvent.getSource() == myAboutMenuItem) {
     		try {
     			text = new textReader("./src/files/version.txt");
     			JOptionPane.showMessageDialog(this, text.getText(), "About Tidy", JOptionPane.INFORMATION_MESSAGE);
