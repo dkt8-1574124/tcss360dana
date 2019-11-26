@@ -3,15 +3,16 @@ package application;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -40,9 +41,20 @@ public class MainFrame extends JFrame implements ActionListener {
     private static JMenu mySettings = new JMenu("Settings");
     private static JMenuItem myImport = new JMenuItem("Import");
     private static JMenuItem myExport = new JMenuItem("Export");
-    private static JMenuItem myViewButton = new JMenuItem("Edit Settings");
-    
+    private static JMenuItem myEditButton = new JMenuItem("Edit Settings");
+    private static JMenuItem myViewButton = new JMenuItem("View");
+    private static JButton myAdd = new JButton("+");
+
     private static JFileChooser myChoice = new JFileChooser();
+    
+    private JPanel leftPanel = new JPanel(new BorderLayout());
+    private JPanel rightPanel = new JPanel();
+    private JPanel topPanel = new JPanel(new BorderLayout());
+
+    private JPanel projectPanel = new JPanel();
+    private JScrollPane myScroll = new JScrollPane(projectPanel);
+    
+    private projectController myController = new projectController();
 
 
     /**
@@ -62,16 +74,22 @@ public class MainFrame extends JFrame implements ActionListener {
         final int height = 500;
         this.setSize(new Dimension(width, height));
         this.setResizable(false);
-
+        myAdd.setBounds( 100, 100, 100, 100);
         //Creates the panels for layout design
-        final JPanel topPanel = new JPanel(new BorderLayout());
+
         this.add(topPanel, BorderLayout.CENTER);
-        final JPanel leftPanel = new JPanel();
-        final JPanel rightPanel = new JPanel();
-        final JTextArea test = new JTextArea("Test           west");
+
+       // final JTextArea test = new JTextArea("Test           west");
         final JTextArea test2 = new JTextArea("Test Center");
+        projectPanel.setLayout(new GridLayout(0,1));
         leftPanel.setBackground(Color.BLUE);
-        leftPanel.add(test);
+        myScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        myScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        leftPanel.add(myScroll, BorderLayout.CENTER);
+        leftPanel.add(myAdd, BorderLayout.SOUTH);
+
+        
+        //leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
         rightPanel.setBackground(Color.RED);
         rightPanel.add(test2);
         topPanel.add(leftPanel, BorderLayout.WEST);
@@ -84,14 +102,17 @@ public class MainFrame extends JFrame implements ActionListener {
         myInfoMenu.add(myAboutMenuItem);
         mySettings.add(myImport);
         mySettings.add(myExport);
+        mySettings.add(myEditButton);
         mySettings.add(myViewButton);
         myAboutMenuItem.addActionListener(this);
-        myViewButton.addActionListener(this);
+        myEditButton.addActionListener(this);
         myImport.addActionListener(this);
         myExport.addActionListener(this);
+        myViewButton.addActionListener(this);
+        myAdd.addActionListener(this);
         
         //
-        JButton fillButton = new JButton();
+
         
 
     }
@@ -101,16 +122,32 @@ public class MainFrame extends JFrame implements ActionListener {
      * @param theString the name of the file.
      * @return whether the file is a .txt file.
      */
-    private boolean validateFile(final String theString) {
+    /*private boolean validateFile(final String theString) {
 
         return false;
-    }
+    }*/
     
 
     public void actionPerformed(final ActionEvent theEvent) {
-    	final Object source = theEvent.getSource();
+    	//final Object source = theEvent.getSource();
     	textReader text;
-    	if(theEvent.getSource() == myAboutMenuItem) {
+    	
+    	if(theEvent.getSource() == myAdd) {
+    		projectPanel.removeAll();
+    		JTextField field1 = new JTextField();
+    		Object[] fields = {"Enter a project Name:", field1};
+    		int returnVal = JOptionPane.showConfirmDialog(this, fields, "Project Name", JOptionPane.OK_CANCEL_OPTION);
+    		if(returnVal == JOptionPane.OK_OPTION) {
+    			myController.add(field1.getText());
+    			for(JButton j: myController.getProjects()) {
+    				j.setPreferredSize(new Dimension(100,50));
+    				projectPanel.add(j);
+    			}
+
+    			this.validate();
+    		}
+    		
+    	}else if(theEvent.getSource() == myAboutMenuItem) {
     		try {
     			text = new textReader("./src/files/version.txt");
     			JOptionPane.showMessageDialog(this, text.getText(), "About Tidy", JOptionPane.INFORMATION_MESSAGE);
@@ -151,7 +188,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				writer.close();
 			} catch (IOException e) {
 			}
-    	}else if(theEvent.getSource() == myViewButton) {    		
+    	}else if(theEvent.getSource() == myEditButton) {    		
     		JTextField field1 = new JTextField();
     		JTextField field2 = new JTextField();
     		
@@ -168,6 +205,14 @@ public class MainFrame extends JFrame implements ActionListener {
 				writer.write(field2.getText());
 				writer.close();
 			} catch (IOException e) {
+			}
+    	}else if(theEvent.getSource() == myViewButton) {
+    		try {
+				text = new textReader("./src/files/settings.txt");
+				JOptionPane.showMessageDialog(this, text.getText(), "Settings", JOptionPane.INFORMATION_MESSAGE);
+				
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
 			}
     	}
  
