@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 John Doe
 JD@email.com
+=======
+john doe
+111111@111
+>>>>>>> 9745c8cd381f8182b0faa5ee5b6d284c09ff666e
