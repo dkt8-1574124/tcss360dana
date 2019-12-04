@@ -13,7 +13,7 @@ public class Project {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public void setName(String newName) {
 		this.name = newName;
 	}
@@ -30,7 +30,7 @@ public class Project {
 	public int getItemSize(Project p) {
 		return -1;
 	}
-	
+
 	public void addItem(Item newItem) {
 		this.itemsList.add(newItem);
 	}

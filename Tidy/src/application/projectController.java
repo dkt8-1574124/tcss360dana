@@ -20,11 +20,6 @@ public class projectController {
 		myProjects.add(project);
 	}
 	
-//	public void addDocment(String theDocName) {
-//		Project project = new Project(theProjectName);
-//		myProjects.add(project);
-//	}
-	
 	public Project getChoosenProject(String buttonName) {
 		for (Project p: myProjects) {
 			if(p.getName().equals(buttonName)) {
@@ -61,5 +56,4 @@ public class projectController {
 		}
 		return result.substring(0, result.length() - 1) + "]";
 	}
-
 }

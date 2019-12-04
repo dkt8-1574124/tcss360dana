@@ -89,14 +89,16 @@ public class MainFrame extends JFrame implements ActionListener {
 
        // final JTextArea test = new JTextArea("Test           west");
         final JTextArea test2 = new JTextArea("Test Center");
-        final JTextArea test3 = new JTextArea("Test Center");
-
         projectPanel.setLayout(new GridLayout(0,1));
         leftPanel.setBackground(Color.BLUE);
-        myScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        myScroll.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        myScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         myScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        leftPanel.add(myScroll, BorderLayout.CENTER);
-        leftPanel.add(myAdd, BorderLayout.SOUTH);
+        leftPanel.add(new JPanel(), BorderLayout.NORTH);
+        leftPanel.add(myScroll, BorderLayout.NORTH);
+        
+        leftPanel.add(new JPanel(), BorderLayout.CENTER);
+        leftPanel.add(new JPanel().add(myAdd), BorderLayout.SOUTH);
 
         //leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
         
