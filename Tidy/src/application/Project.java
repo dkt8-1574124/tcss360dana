@@ -13,6 +13,7 @@ public class Project {
 	public String getName() {
 		return this.name;
 	}
+
 	public void setName(String newName) {
 		this.name = newName;
 	}
@@ -21,6 +22,15 @@ public class Project {
 		return this.itemsList;
 	}
 	
+	public int getSize() {
+		return this.itemsList.size();
+	}
+	
+	//need to do
+	public int getItemSize(Project p) {
+		return -1;
+	}
+
 	public void addItem(Item newItem) {
 		this.itemsList.add(newItem);
 	}
