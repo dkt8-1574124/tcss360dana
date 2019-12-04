@@ -2,8 +2,10 @@ package application;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -11,11 +13,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -48,14 +53,17 @@ public class MainFrame extends JFrame implements ActionListener {
     private static JFileChooser myChoice = new JFileChooser();
     
     private JPanel leftPanel = new JPanel(new BorderLayout());
-    private JPanel rightPanel = new JPanel();
+    private JPanel rightPanel = new JPanel(new GridLayout(1,2));
     private JPanel topPanel = new JPanel(new BorderLayout());
 
     private JPanel projectPanel = new JPanel();
     private JScrollPane myScroll = new JScrollPane(projectPanel);
     
     private projectController myController = new projectController();
-
+    
+    private JPanel listView = new JPanel(new GridLayout(1,1,10,10));
+    private Project choosenProject = null;
+    private JButton addDoc = new JButton("Add Document");
 
     /**
      * Sets up the frame with a title and basic exit operations.
@@ -83,15 +91,25 @@ public class MainFrame extends JFrame implements ActionListener {
         final JTextArea test2 = new JTextArea("Test Center");
         projectPanel.setLayout(new GridLayout(0,1));
         leftPanel.setBackground(Color.BLUE);
-        myScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        myScroll.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        myScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         myScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        leftPanel.add(myScroll, BorderLayout.CENTER);
-        leftPanel.add(myAdd, BorderLayout.SOUTH);
-
+        leftPanel.add(new JPanel(), BorderLayout.NORTH);
+        leftPanel.add(myScroll, BorderLayout.NORTH);
         
+        leftPanel.add(new JPanel(), BorderLayout.CENTER);
+        leftPanel.add(new JPanel().add(myAdd), BorderLayout.SOUTH);
+
         //leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.Y_AXIS));
+        
+        
+        //listView.setLayout(new BoxLayout(listView, BoxLayout.PAGE_AXIS));
+        //JButton b1 = new JButton("B1");
+        //b1.setMaximumSize(new Dimension(Integer.MAX_VALUE, b1.getMinimumSize().height));
+        //listView.add(b1);
+        //listView.add(new JButton("B2"));
+        
         rightPanel.setBackground(Color.RED);
-        rightPanel.add(test2);
         topPanel.add(leftPanel, BorderLayout.WEST);
         topPanel.add(rightPanel);
         
@@ -104,6 +122,7 @@ public class MainFrame extends JFrame implements ActionListener {
         mySettings.add(myExport);
         mySettings.add(myEditButton);
         mySettings.add(myViewButton);
+        
         myAboutMenuItem.addActionListener(this);
         myEditButton.addActionListener(this);
         myImport.addActionListener(this);
@@ -111,10 +130,7 @@ public class MainFrame extends JFrame implements ActionListener {
         myViewButton.addActionListener(this);
         myAdd.addActionListener(this);
         
-        //
-
-        
-
+        addDoc.addActionListener(this);
     }
     
     /**
@@ -127,13 +143,15 @@ public class MainFrame extends JFrame implements ActionListener {
         return false;
     }*/
     
-
     public void actionPerformed(final ActionEvent theEvent) {
     	//final Object source = theEvent.getSource();
     	textReader text;
+    	System.out.println("control: " + myController.toString());
+    	System.out.println(theEvent.getActionCommand());
     	
     	if(theEvent.getSource() == myAdd) {
     		projectPanel.removeAll();
+    		
     		JTextField field1 = new JTextField();
     		Object[] fields = {"Enter a project Name:", field1};
     		int returnVal = JOptionPane.showConfirmDialog(this, fields, "Project Name", JOptionPane.OK_CANCEL_OPTION);
@@ -142,20 +160,18 @@ public class MainFrame extends JFrame implements ActionListener {
     			for(JButton j: myController.getProjects()) {
     				j.setPreferredSize(new Dimension(100,50));
     				projectPanel.add(j);
+    				j.addActionListener(this);
     			}
-
     			this.validate();
     		}
-    		
-    	}else if(theEvent.getSource() == myAboutMenuItem) {
+    	} else if(theEvent.getSource() == myAboutMenuItem) {
     		try {
     			text = new textReader("./src/files/version.txt");
     			JOptionPane.showMessageDialog(this, text.getText(), "About Tidy", JOptionPane.INFORMATION_MESSAGE);
     		} catch (FileNotFoundException e) {
     			System.out.println("File not found");
     		}
-    	}
-    	else if(theEvent.getSource() == myImport) {
+    	} else if(theEvent.getSource() == myImport) {
     		int returnVal = myChoice.showOpenDialog(this);
     		String fileContent ="";
     		if(returnVal == JFileChooser.APPROVE_OPTION) {
@@ -164,8 +180,7 @@ public class MainFrame extends JFrame implements ActionListener {
 					fileContent = text.getText();
 				} catch (FileNotFoundException e1) {
 					
-				}
-    			
+				}	
     	     
     			BufferedWriter writer;
     			try {
@@ -175,10 +190,8 @@ public class MainFrame extends JFrame implements ActionListener {
     			} catch (IOException e) {
     				System.out.println("No file found");
     			}
-
     		}
-    	}
-    	else if(theEvent.getSource() == myExport) {
+    	} else if(theEvent.getSource() == myExport) {
     		try {
 				text = new textReader("./src/files/settings.txt");
 				File exportFile = new File("./src/files/export.txt");
@@ -188,7 +201,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				writer.close();
 			} catch (IOException e) {
 			}
-    	}else if(theEvent.getSource() == myEditButton) {    		
+    	} else if(theEvent.getSource() == myEditButton) {    		
     		JTextField field1 = new JTextField();
     		JTextField field2 = new JTextField();
     		
@@ -206,7 +219,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				writer.close();
 			} catch (IOException e) {
 			}
-    	}else if(theEvent.getSource() == myViewButton) {
+    	} else if(theEvent.getSource() == myViewButton) {
     		try {
 				text = new textReader("./src/files/settings.txt");
 				JOptionPane.showMessageDialog(this, text.getText(), "Settings", JOptionPane.INFORMATION_MESSAGE);
@@ -214,8 +227,44 @@ public class MainFrame extends JFrame implements ActionListener {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
+    	} else if (myController.contains(theEvent.getActionCommand())) {
+	    	rightPanel.removeAll();
+    		for (JButton b: myController.getProjects()) {	
+	    		if (theEvent.getActionCommand().equals(b.getText())) {
+	    			System.out.println("works");
+	    			choosenProject = myController.getChoosenProject(b.getText());		
+	    		}
+	    	}
+    		if(choosenProject != null) {
+            	System.out.println("go");
+    	        listView = new JPanel(new GridLayout(choosenProject.getSize(),1,10,10));
+    	        
+    	        for (Item i: choosenProject.getItemsList()) {
+    		        JButton b = new JButton(i.getName());
+    		        listView.add(b);
+    	        }
+    	      
+    	        JPanel bottomMenu = new JPanel();
+    	        bottomMenu.add(addDoc);addDoc.addActionListener(this);
+    	        listView.add(bottomMenu, BorderLayout.PAGE_END);
+    	        
+    	        JPanel docView = new JPanel();
+    	        docView.setBackground(Color.RED);
+    	        rightPanel.add(listView);
+    	        rightPanel.add(docView);
+            }
+	    	this.validate();
+    	} else if (theEvent.getSource() == addDoc) {
+    		//adjsut size
+	        //listView = new JPanel(new GridLayout(myController.getItemSize(choosenProject),1,10,10));
+    		listView.add(new JButton("(document here)"));
+    		
+    		JPanel bottomMenu = new JPanel();
+	        bottomMenu.add(addDoc);addDoc.addActionListener(this);
+	        listView.add(bottomMenu, BorderLayout.PAGE_END);
+	        
+	        this.validate();
     	}
- 
     }
     
 }

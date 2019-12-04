@@ -2,7 +2,7 @@ package application;
 
 public class Item {
 
-	private String type; //.pdf  .txt  .jpeg  .png
+	//private String type; //.pdf  .txt  .jpeg  .png  .doc
 	private String name;
 	private String description;
 	private String filePath;
@@ -12,8 +12,8 @@ public class Item {
 		this.name = Name;
 		this.filePath = FilePath;
 		
-		String[] parts = this.filePath.split(".");
-		this.type = "." + parts[parts.length - 1];
+//		String[] parts = FilePath.split(".");
+//		this.type = "." + parts[parts.length - 1];
 	} 
 	
 	public String getName() {
@@ -24,9 +24,9 @@ public class Item {
 		this.name = newName;
 	}
 	
-	public String getType() {
-		return this.type;
-	}
+//	public String getType() {
+//		return this.type;
+//	}
 	
 	public String getDescription() {
 		return this.description;

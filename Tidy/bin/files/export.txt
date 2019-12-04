@@ -1,2 +1,12 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
 john doe
 111111@111
+=======
+John Doe
+JD@email.com
+>>>>>>> master
+=======
+Amelia
+hi@gmail.com
+>>>>>>> master

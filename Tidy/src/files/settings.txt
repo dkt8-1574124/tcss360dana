@@ -1,1 +1,6 @@
+<<<<<<< HEAD
 
+=======
+Amelia
+hi@gmail.com
+>>>>>>> master
