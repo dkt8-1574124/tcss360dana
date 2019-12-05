@@ -21,7 +21,7 @@ public class Project {
 		this.itemsList = new ArrayList<Item>();
 	}
 	
-	/**
+	/** 
 	 * Returns the name of the Project object.
 	 * @return the name of the Project object
 	 */

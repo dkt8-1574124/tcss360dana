@@ -8,7 +8,7 @@ import javax.swing.JButton;
 
 /**
  * Handles and organizes the Project Objects.
- * @author Nick
+ * @author Nick and Duy
  */
 public class projectController {
 	

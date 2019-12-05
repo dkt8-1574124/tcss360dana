@@ -2,11 +2,9 @@ package application;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -14,14 +12,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -129,7 +122,6 @@ public class MainFrame extends JFrame implements ActionListener {
         myViewButton.addActionListener(this);
         myAdd.addActionListener(this);
         
-        addDoc.addActionListener(this);
     }
     
     /**
@@ -233,12 +225,12 @@ public class MainFrame extends JFrame implements ActionListener {
 	    	rightPanel.removeAll();
     		for (JButton b: myController.getProjects()) {	
 	    		if (theEvent.getActionCommand().equals(b.getText())) {
-	    			System.out.println("works");
+	    			//System.out.println("works");
 	    			choosenProject = myController.getChoosenProject(b.getText());		
 	    		}
 	    	}
     		if(choosenProject != null) {
-            	System.out.println("go");
+            	//System.out.println("go");
     	        listView = new JPanel(new GridLayout(choosenProject.getSize(),1,10,10));
     	        
     	        for (Item i: choosenProject.getItemsList()) {
@@ -247,7 +239,8 @@ public class MainFrame extends JFrame implements ActionListener {
     	        }
     	      
     	        JPanel bottomMenu = new JPanel();
-    	        bottomMenu.add(addDoc);addDoc.addActionListener(this);
+    	        bottomMenu.add(addDoc);
+    	        addDoc.addActionListener(this);
     	        listView.add(bottomMenu, BorderLayout.PAGE_END);
     	        
     	        JPanel docView = new JPanel();
@@ -256,13 +249,15 @@ public class MainFrame extends JFrame implements ActionListener {
     	        rightPanel.add(docView);
             }
 	    	this.validate();
+	    	
     	} else if (theEvent.getSource() == addDoc) {
     		//adjsut size
-	        //listView = new JPanel(new GridLayout(myController.getItemSize(choosenProject),1,10,10));
+	        //listView = new JPanel(new BorderLayout());
     		listView.add(new JButton("(document here)"));
     		
     		JPanel bottomMenu = new JPanel();
-	        bottomMenu.add(addDoc);addDoc.addActionListener(this);
+	        //bottomMenu.add(addDoc);
+	        //addDoc.addActionListener(this);
 	        listView.add(bottomMenu, BorderLayout.PAGE_END);
 	        
 	        this.validate();
