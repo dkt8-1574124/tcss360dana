@@ -1,0 +1,13 @@
+git branch
+
+git checkout YourBranchName
+
+git status 
+
+git add -A
+
+git commit -m "YourMessage"
+
+git push 
+
+the push is to your github branch
