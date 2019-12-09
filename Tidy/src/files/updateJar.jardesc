@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <jardesc>
     <jar path="C:/Users/Nick/Desktop/tidy/tidyJar.jar"/>
+=======
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<jardesc>
+    <jar path="C:/Users/grace/Desktop/tidyJar.jar"/>
+>>>>>>> master
     <options buildIfNeeded="true" compress="true" descriptionLocation="/Tidy/src/files/updateJar.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
@@ -13,6 +19,9 @@
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
         <file path="/Tidy/.project"/>
         <file path="/Tidy/.classpath"/>
+<<<<<<< HEAD
         <javaElement handleIdentifier="=Tidy/src"/>
+=======
+>>>>>>> master
     </selectedElements>
 </jardesc>
