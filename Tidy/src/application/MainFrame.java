@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.List;
 import java.awt.event.ActionEvent;
@@ -46,8 +47,8 @@ public class MainFrame extends JFrame implements ActionListener {
     private static JMenuItem myExport = new JMenuItem("Export");
     private static JMenuItem myEditButton = new JMenuItem("Edit Settings");
     private static JMenuItem myViewButton = new JMenuItem("View");
-    private static JButton myAdd = new JButton("+");
-    private static JButton myRemove = new JButton("-");
+    private static JButton myAdd = new JButton("Add Project");
+    private static JButton myRemove = new JButton("Delete Project");
 
     
     private static JFileChooser myChoice = new JFileChooser();
@@ -62,20 +63,18 @@ public class MainFrame extends JFrame implements ActionListener {
     private projectController myController = new projectController();
     private ArrayList<JButton> myProjectButtons = new ArrayList<JButton>();
     
-
     private JPanel myScrollPanel = new JPanel();
     private JPanel listView = new JPanel();
     private JPanel itemBorderPanel = new JPanel();
     private JScrollPane myItemScroll = new JScrollPane(myScrollPanel);
     private Project choosenProject = null;
     private Item choosenItem = null;
-
     
     private JButton addDoc = new JButton("Add");
     private JButton removeDoc = new JButton("Remove");
     private JButton editDocument = new JButton("Edit");
     private JButton openDocument = new JButton("Open");
-
+ 
     /**
      * Sets up the frame with a title and basic exit operations.
      */
@@ -90,8 +89,6 @@ public class MainFrame extends JFrame implements ActionListener {
      * Adds all of the GUI elements and adds all the action listeners.
      */
     public void start() {
-
-
         this.add(topPanel, BorderLayout.CENTER);
 
         leftPanel.setLayout(new BoxLayout(leftPanel,BoxLayout.PAGE_AXIS));
@@ -101,7 +98,6 @@ public class MainFrame extends JFrame implements ActionListener {
         JPanel borderPanelSouth = new JPanel();
         
         projectPanel.setLayout(new GridLayout(50,1));
-        
         
         listView.add(itemBorderPanel);
         itemBorderPanel.add(myScrollPanel);
@@ -121,17 +117,11 @@ public class MainFrame extends JFrame implements ActionListener {
         borderPanelSouth.add(myRemove);
         myRemove.setEnabled(false);
         
-
         leftPanel.add(borderPanelSouth);
-
-
-        
         rightPanel.setBackground(Color.RED);
         topPanel.add(leftPanel, BorderLayout.WEST);
         topPanel.add(rightPanel);
-        
-           
-        
+          
         // Creates the menu and menu items
         this.add(myMenuBar, BorderLayout.NORTH);
         myMenuBar.add(myInfoMenu);
@@ -141,6 +131,13 @@ public class MainFrame extends JFrame implements ActionListener {
         mySettings.add(myExport);
         mySettings.add(myEditButton);
         mySettings.add(myViewButton);
+        
+        customizeButton(myAdd);
+        customizeButton(myRemove);
+        customizeButton(addDoc);
+        customizeButton(removeDoc);
+        customizeButton(editDocument);
+        customizeButton(openDocument);
         
         myAboutMenuItem.addActionListener(this);
         myEditButton.addActionListener(this);
@@ -152,13 +149,10 @@ public class MainFrame extends JFrame implements ActionListener {
         addDoc.addActionListener(this);
         removeDoc.addActionListener(this);
         editDocument.addActionListener(this);
-        openDocument.addActionListener(this);
-        
+        openDocument.addActionListener(this);   
     }
     
-
     private void createDocPanel(Project theProject) {
-    	
     	if(theProject == null) {
     		rightPanel.removeAll();
     		rightPanel.repaint();
@@ -175,8 +169,6 @@ public class MainFrame extends JFrame implements ActionListener {
         textText.setLayout(new GridLayout(0,2,5,5));
         docScrolls.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         docScrolls.setPreferredSize(new Dimension(750,354));
-
-
         
         for(JButton b : theProject.getItemButtons()) {
         	textText.add(b);
@@ -185,20 +177,17 @@ public class MainFrame extends JFrame implements ActionListener {
         
         itemsList.add(addDoc);
         itemsList.add(removeDoc);
-        removeDoc.setEnabled(false);
         itemsList.add(editDocument);
-        editDocument.setEnabled(false);
         itemsList.add(openDocument);
+        removeDoc.setEnabled(false);
+        editDocument.setEnabled(false);
         openDocument.setEnabled(false);
         testRight.add(docScrolls);
         rightPanel.setLayout(new BorderLayout());
         rightPanel.add(projectName, BorderLayout.PAGE_START);
         rightPanel.add(testRight, BorderLayout.CENTER);
-        rightPanel.add(itemsList, BorderLayout.PAGE_END);
-        
-        
+        rightPanel.add(itemsList, BorderLayout.PAGE_END);   
     }
-    
     
     private void updateProjects() {
     	projectPanel.removeAll();
@@ -207,23 +196,16 @@ public class MainFrame extends JFrame implements ActionListener {
 			j.addActionListener(this);
 		}
 		projectPanel.repaint();
-		
     }
     
     /**
      * Decides which action to perform based on which event is triggered.
      */
     public void actionPerformed(final ActionEvent theEvent) {
-
     	textReader text;
-
-    	System.out.println("Action command:" + theEvent.getActionCommand());
-    	
-    	
+    	System.out.println("Action command:" + theEvent.getActionCommand()); 	
     	//ADD PROJECT
-    	if(theEvent.getSource() == myAdd) {
-
-    		
+    	if(theEvent.getSource() == myAdd) {   		
     		JTextField field1 = new JTextField();
     		Object[] fields = {"Enter a project Name:", field1};
     		int returnVal = JOptionPane.showConfirmDialog(this, fields, "Project Name", JOptionPane.OK_CANCEL_OPTION);
@@ -232,9 +214,6 @@ public class MainFrame extends JFrame implements ActionListener {
     			updateProjects();
     			this.validate();
     		}
-    		
-    		
-    		
     	//REMOVE PROJECT BUTTON
     	} else if(theEvent.getSource() == myRemove){
     		if(choosenProject == null) {
@@ -253,11 +232,7 @@ public class MainFrame extends JFrame implements ActionListener {
     			updateProjects();
     			this.validate();
     		}
-    		
-    	}
-    	
-    	
-    	else if(theEvent.getSource() == removeDoc) {
+    	} else if(theEvent.getSource() == removeDoc) {
     		if(choosenItem == null) {
     			removeDoc.setEnabled(false);
     			editDocument.setEnabled(false);
@@ -277,9 +252,7 @@ public class MainFrame extends JFrame implements ActionListener {
     			openDocument.setEnabled(false);
     			this.validate();
     		}
-
     	}
-    	
     	//EDIT DOCUMENT
     	else if(theEvent.getSource() == editDocument) {
     		if(choosenItem == null) {
@@ -300,7 +273,6 @@ public class MainFrame extends JFrame implements ActionListener {
     			this.validate();
     		}
     	}
-    	
     	//OPEN DOCUMENT BUTTON
     	else if(theEvent.getSource() == openDocument) {
     		if(choosenItem == null) {
@@ -311,7 +283,6 @@ public class MainFrame extends JFrame implements ActionListener {
     		}
     		choosenItem.openItem();
     	}
-    	
     	//ABOUT BUTTON 
     	else if(theEvent.getSource() == myAboutMenuItem) {
     		try {
@@ -321,8 +292,6 @@ public class MainFrame extends JFrame implements ActionListener {
     			System.out.println("File not found");
     		}
     	}
-    	
-    	
     	//IMPORT BUTTON
     	else if(theEvent.getSource() == myImport) {
     		int returnVal = myChoice.showOpenDialog(this);
@@ -345,9 +314,6 @@ public class MainFrame extends JFrame implements ActionListener {
     			}
     		}
     	}
-    	
-    	
-    	
     	//EXPORT BUTTON
     	else if(theEvent.getSource() == myExport) {
     		try {
@@ -359,10 +325,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				writer.close();
 			} catch (IOException e) {
 			}
-    	}
-    	
-    	
-    	
+    	}	
     	//EDIT BUTTON
     	else if(theEvent.getSource() == myEditButton) {    		
     		JTextField field1 = new JTextField();
@@ -383,9 +346,6 @@ public class MainFrame extends JFrame implements ActionListener {
 			} catch (IOException e) {
 			}
     	} 
-    	
-    	
-    	
     	//VIEW BUTTON
     	else if(theEvent.getSource() == myViewButton) {
     		try {
@@ -396,11 +356,8 @@ public class MainFrame extends JFrame implements ActionListener {
 				e.printStackTrace();
 			}
     	}
-    	
-    	
     	//ADD PROJECT BUTTONS
     	else if (myController.contains(theEvent.getActionCommand())) {
-	    	
     		for (JButton b: myController.getProjects()) {	
 	    		if (theEvent.getActionCommand().equals(b.getText())) {
 	    			choosenProject = myController.getChoosenProject(b.getText());
@@ -409,12 +366,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	    			break;
 	    		}
 	    	}
-    		
-
 	    	this.validate();		    	
-	    	
     	}
-    	
     	//SELECT A DOCUMENT
     	else if(choosenProject != null && choosenProject.getItemNames().contains(theEvent.getActionCommand())) {
     		choosenItem = choosenProject.getItem(theEvent.getActionCommand());
@@ -425,10 +378,8 @@ public class MainFrame extends JFrame implements ActionListener {
     			removeDoc.setEnabled(true);
     		}
     	}
-    	
     	//ADD DOCUMENT
     	else if (theEvent.getSource() == addDoc) {
-    		
     		JFileChooser fc = new JFileChooser();
     		int choice = fc.showOpenDialog(this);
     		if(choice == JFileChooser.APPROVE_OPTION) {
@@ -446,14 +397,20 @@ public class MainFrame extends JFrame implements ActionListener {
         		}
     		}
 
-    		
-    		
     		JPanel bottomMenu = new JPanel();
-
 	        listView.add(bottomMenu, BorderLayout.PAGE_END);
-	        
 	        this.validate();
     	} 
     }
     
+    /*
+     * Customize the look and feel of some buttons
+     */
+    private void customizeButton (JButton button) {
+    	button.setFont(new java.awt.Font("Arial", Font.BOLD, 14));
+    	button.setBackground(new Color(59, 89, 182));
+    	button.setForeground(Color.WHITE);
+    	button.setFocusPainted(false);
+    	button.setFont(new Font("Tahoma", Font.BOLD, 12));
+    }
 }
