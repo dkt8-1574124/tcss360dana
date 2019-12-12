@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 
 import org.junit.Before;
@@ -25,6 +27,7 @@ public class ItemTest {
 	@Before
 	public void setUp() throws Exception {
 		File f = new File("file.txt");
+		testItem = new Item("Doc", "Desc", f);
 	}
 
 	/**
