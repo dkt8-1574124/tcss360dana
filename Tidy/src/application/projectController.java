@@ -77,12 +77,15 @@ public class projectController {
 		return false;
 	}
 	
+<<<<<<< HEAD
 	public void remove(Project theProject) {
 		myProjects.remove(theProject);
 	}
 
 	
 	
+=======
+>>>>>>> master
 	/**
 	 * Returns a string representation of the projects list.
 	 * @return	string representation of the projects list
