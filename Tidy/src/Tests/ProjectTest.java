@@ -2,6 +2,7 @@ package Tests;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.junit.Before;
@@ -18,6 +19,8 @@ public class ProjectTest {
 	
 	/** The Proejct object to be used in testing. */
 	private Project testPro;
+	/** A file to be used for testing **/
+	private File f;
 
 	/**
 	 * Constructs the Project object to be used for testing.
@@ -26,6 +29,7 @@ public class ProjectTest {
 	@Before
 	public void setUp() throws Exception {
 		testPro = new Project("Test");
+		f = new File("file.txt");
 		
 	}
 
@@ -53,7 +57,7 @@ public class ProjectTest {
 	 */
 	@Test 
 	public void testAdd_GetItem() {
-		Item item = new Item("Doc", "New doc", "new.doc");
+		Item item = new Item("Doc", "New doc", f);
 		testPro.addItem(item);
 		assertEquals("Item Not Added!", item, testPro.getItem("Doc"));
 	}
@@ -63,7 +67,7 @@ public class ProjectTest {
 	 */
 	@Test 
 	public void testRemoveItem_GetItemsList() {
-		Item item = new Item("Doc", "New doc", "new.doc");
+		Item item = new Item("Doc", "New doc", f);
 		testPro.addItem(item);
 		assertEquals("Item Not Added!", 1, testPro.getSize());
 		testPro.removeItem(item);
@@ -76,7 +80,7 @@ public class ProjectTest {
 	@Test
 	public void testFindItem() {
 		assertEquals("Found Item!", null, testPro.getItem("Pic"));
-		Item item = new Item("Pic", "New pic", "new.jpg");
+		Item item = new Item("Pic", "New pic", f);
 		testPro.addItem(item);
 		assertEquals("Didnt Find Item!", item, testPro.getItem("Pic"));
 	}

@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
@@ -13,8 +12,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -26,7 +23,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -60,7 +56,7 @@ public class MainFrame extends JFrame implements ActionListener {
     private JScrollPane myScroll = new JScrollPane(projectPanel);
     
     private projectController myController = new projectController();
-    private ArrayList<JButton> myProjectButtons = new ArrayList<JButton>();
+    //private ArrayList<JButton> myProjectButtons = new ArrayList<JButton>();
     
 
     private JPanel myScrollPanel = new JPanel();

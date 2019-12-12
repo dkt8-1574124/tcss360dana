@@ -1,9 +1,6 @@
 package application;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-
 import javax.swing.JButton;
 
 /**
@@ -16,14 +13,14 @@ public class projectController {
 	private ArrayList<Project> myProjects;
 	
 	/** A map to be used for storing Projects and the Items. */
-	private HashMap<Project, Item> storage;
+	//private HashMap<Project, Item> storage;
 	
 	/**
 	 * Creates the project list and storage map.
 	 */
 	public projectController() {
 		myProjects = new ArrayList<Project>();
-		storage = new HashMap<Project, Item>();
+		//storage = new HashMap<Project, Item>();
 	}
 	
 	/**
