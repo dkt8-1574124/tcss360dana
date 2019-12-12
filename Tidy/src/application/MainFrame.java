@@ -55,9 +55,7 @@ public class MainFrame extends JFrame implements ActionListener {
     private JPanel projectPanel = new JPanel();
     private JScrollPane myScroll = new JScrollPane(projectPanel);
     
-    private projectController myController = new projectController();
-    //private ArrayList<JButton> myProjectButtons = new ArrayList<JButton>();
-    
+    private projectController myController = new projectController();    
 
     private JPanel myScrollPanel = new JPanel();
     private JPanel listView = new JPanel();
@@ -311,7 +309,7 @@ public class MainFrame extends JFrame implements ActionListener {
     	//ABOUT BUTTON 
     	else if(theEvent.getSource() == myAboutMenuItem) {
     		try {
-    			text = new textReader("./src/files/version.txt");
+    			text = new textReader("./Tidy/src/files/version.txt");
     			JOptionPane.showMessageDialog(this, text.getText(), "About Tidy", JOptionPane.INFORMATION_MESSAGE);
     		} catch (FileNotFoundException e) {
     			System.out.println("File not found");
@@ -333,7 +331,7 @@ public class MainFrame extends JFrame implements ActionListener {
     	     
     			BufferedWriter writer;
     			try {
-    				writer = new BufferedWriter(new FileWriter("./src/files/settings.txt"));
+    				writer = new BufferedWriter(new FileWriter("./Tidy/src/files/settings.txt"));
     				writer.write(fileContent);
     				writer.close();
     			} catch (IOException e) {
@@ -347,8 +345,8 @@ public class MainFrame extends JFrame implements ActionListener {
     	//EXPORT BUTTON
     	else if(theEvent.getSource() == myExport) {
     		try {
-				text = new textReader("./src/files/settings.txt");
-				File exportFile = new File("./src/files/export.txt");
+				text = new textReader("./Tidy/src/files/settings.txt");
+				File exportFile = new File("./Tidy/src/files/export.txt");
 				exportFile.createNewFile();
 				FileWriter writer = new FileWriter(exportFile);
 				writer.write(text.getText());
@@ -370,7 +368,7 @@ public class MainFrame extends JFrame implements ActionListener {
     		};
     		JOptionPane.showConfirmDialog(null, fields, "Customize My Settings", JOptionPane.OK_CANCEL_OPTION);
     		try {
-				File exportFile = new File("./src/files/settings.txt");
+				File exportFile = new File("./Tidy/src/files/settings.txt");
 				exportFile.createNewFile();
 				FileWriter writer = new FileWriter(exportFile);
 				writer.write(field1.getText() + "\n");
@@ -385,7 +383,7 @@ public class MainFrame extends JFrame implements ActionListener {
     	//VIEW BUTTON
     	else if(theEvent.getSource() == myViewButton) {
     		try {
-				text = new textReader("./src/files/settings.txt");
+				text = new textReader("./Tidy/src/files/settings.txt");
 				JOptionPane.showMessageDialog(this, text.getText(), "Settings", JOptionPane.INFORMATION_MESSAGE);
 				
 			} catch (FileNotFoundException e) {
