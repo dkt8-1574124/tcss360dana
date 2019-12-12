@@ -1,6 +1,6 @@
 package Tests;
 
-import static org.junit.Assert.*;
+import java.io.File;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +24,7 @@ public class ItemTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		testItem = new Item("Doc", "New doc", "new.doc");
-		
+		File f = new File("file.txt");
 	}
 
 	/**

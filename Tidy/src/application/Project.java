@@ -1,6 +1,8 @@
 package application;
 import java.util.*;
 
+import javax.swing.JButton;
+
 /**
  * The Project class creates and stores information for a Project object.
  * @author Amelia
@@ -83,5 +85,21 @@ public class Project {
 			}
 		}
 		return null;
+	}
+	
+	public List<String> getItemNames(){
+		ArrayList<String> names = new ArrayList<String>();
+		for(Item i: itemsList) {
+			names.add(i.getName());
+		}
+		return names;
+	}
+	
+	public ArrayList<JButton> getItemButtons() {
+		ArrayList<JButton> buttons = new ArrayList<JButton>();
+		for(Item i: itemsList) {
+			buttons.add(new JButton(i.getName()));
+		}
+		return buttons;
 	}
 }
