@@ -44,7 +44,7 @@ public class Project {
 	 * @return the list of Item objects associated with this Project object
 	 */
 	public List<Item> getItemsList() {
-		return itemsList;
+		return this.itemsList;
 	}
 	
 	/**

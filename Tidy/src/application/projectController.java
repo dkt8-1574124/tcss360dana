@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
-import javax.swing.JToggleButton;
 
 /**
  * Handles and organizes the Project Objects.
@@ -14,7 +13,7 @@ import javax.swing.JToggleButton;
 public class projectController {
 	
 	/** An ArrayList to hold the Project objects created by the user. */
-	private LinkedList<Project> myProjects;
+	private ArrayList<Project> myProjects;
 	
 	/** A map to be used for storing Projects and the Items. */
 	private HashMap<Project, Item> storage;
@@ -23,7 +22,7 @@ public class projectController {
 	 * Creates the project list and storage map.
 	 */
 	public projectController() {
-		myProjects = new LinkedList<Project>();
+		myProjects = new ArrayList<Project>();
 		storage = new HashMap<Project, Item>();
 	}
 	
