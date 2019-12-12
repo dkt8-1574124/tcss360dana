@@ -77,6 +77,12 @@ public class projectController {
 		return false;
 	}
 	
+	public void remove(Project theProject) {
+		myProjects.remove(theProject);
+	}
+
+	
+	
 	/**
 	 * Returns a string representation of the projects list.
 	 * @return	string representation of the projects list

@@ -1,4 +1,9 @@
 package application;
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 /**
  * The item class creates and stores the information of an Item object.
  * @author Amelia
@@ -14,7 +19,7 @@ public class Item {
 	private String description;
 	
 	/** The file path to the item */
-	private String filePath;
+	private File filePath;
 	
 	/** 
 	 * Creates an item object.
@@ -24,7 +29,7 @@ public class Item {
 	 * 
 	 * @author Amelia
 	 */
-	public Item(String Name, String Description, String FilePath) {
+	public Item(String Name, String Description, File FilePath) {
 		this.description = Description;
 		this.name = Name;
 		this.filePath = FilePath;
@@ -67,5 +72,14 @@ public class Item {
 	 */
 	public void setDescription(String newDescription) {
 		this.description = newDescription;
+	}
+	
+	public void openItem() {
+		Desktop desktop = Desktop.getDesktop();
+		try {
+			desktop.open(filePath);
+		} catch (IOException e) {
+			System.out.println("Cannot open file");
+		}
 	}
 }
