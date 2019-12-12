@@ -280,6 +280,38 @@ public class MainFrame extends JFrame implements ActionListener {
 
     	}
     	
+    	//EDIT DOCUMENT
+    	else if(theEvent.getSource() == editDocument) {
+    		if(choosenItem == null) {
+    			removeDoc.setEnabled(false);
+    			editDocument.setEnabled(false);
+    			openDocument.setEnabled(false);
+    			return;
+    		}
+    		JTextField field1 = new JTextField(choosenItem.getName());
+			JTextField field2 = new JTextField(choosenItem.getDescription());
+			field2.setPreferredSize(new Dimension(50,50));
+    		Object[] fields = {"Enter a new Item name for: " + choosenItem.getName(), field1, "Enter a new description of the Item:", field2};
+    		int returnVal = JOptionPane.showConfirmDialog(this, fields, "Item Name", JOptionPane.OK_CANCEL_OPTION);
+    		if(returnVal == JOptionPane.OK_OPTION) {
+    			choosenItem.setName(field1.getText());
+    			choosenItem.setDescription(field2.getText());
+    			createDocPanel(choosenProject);
+    			this.validate();
+    		}
+    	}
+    	
+    	//OPEN DOCUMENT BUTTON
+    	else if(theEvent.getSource() == openDocument) {
+    		if(choosenItem == null) {
+    			removeDoc.setEnabled(false);
+    			editDocument.setEnabled(false);
+    			openDocument.setEnabled(false);
+    			return;
+    		}
+    		choosenItem.openItem();
+    	}
+    	
     	//ABOUT BUTTON 
     	else if(theEvent.getSource() == myAboutMenuItem) {
     		try {

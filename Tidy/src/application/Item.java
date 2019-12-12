@@ -1,6 +1,8 @@
 package application;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * The item class creates and stores the information of an Item object.
@@ -70,5 +72,14 @@ public class Item {
 	 */
 	public void setDescription(String newDescription) {
 		this.description = newDescription;
+	}
+	
+	public void openItem() {
+		Desktop desktop = Desktop.getDesktop();
+		try {
+			desktop.open(filePath);
+		} catch (IOException e) {
+			System.out.println("Cannot open file");
+		}
 	}
 }
