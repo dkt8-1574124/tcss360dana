@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -256,7 +257,7 @@ public class MainFrame extends JFrame implements ActionListener {
     		
     	}
     	
-    	
+    	//REMOVE DOCUMENT
     	else if(theEvent.getSource() == removeDoc) {
     		if(choosenItem == null) {
     			removeDoc.setEnabled(false);
@@ -314,8 +315,10 @@ public class MainFrame extends JFrame implements ActionListener {
     	
     	//ABOUT BUTTON 
     	else if(theEvent.getSource() == myAboutMenuItem) {
+    		ClassLoader classLoader = getClass().getClassLoader();
+    	    File file = new File(classLoader.getResource("files/version.txt").getFile());
     		try {
-    			text = new textReader("./src/files/version.txt");
+    			text = new textReader(file.getAbsolutePath());
     			JOptionPane.showMessageDialog(this, text.getText(), "About Tidy", JOptionPane.INFORMATION_MESSAGE);
     		} catch (FileNotFoundException e) {
     			System.out.println("File not found");
